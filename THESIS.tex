@@ -1,0 +1,196 @@
+\documentclass[master=ene,english]{kulemt}
+\setup{title={Analysis of households' Distributed Energy Resources adoption: An Agent-Based Modeling approach},
+  author={Thomas Vanderhaeghe},
+  promotor={Prof.\,dr.\,ir.\ Erik Delarue},
+  assessor={Prof.\,dr.\,ir.\ Dirk Van Hertem \and Dr. ir. Hakan Ergun},
+  assistant={Dr.\, ir.\ Jorge Andr\'es Moncada \and Ir.\ Zhenmin Tao}}
+% De volgende \setup mag verwijderd worden als geen fiche gewenst is.
+\setup{filingcard,
+  translatedtitle={Beste masterproef ooit al geschreven},
+  udc=621.3,
+  shortabstract={Hier komt een heel bondig abstract van hooguit 500
+    woorden. \LaTeX\ commando's mogen hier gebruikt worden. Blanco lijnen
+    (of het commando \texttt{\string\pa r}) zijn wel niet toegelaten!
+    \endgraf \lipsum[2]}}
+% Verwijder de "%" op de volgende lijn als je de kaft wil afdrukken
+%\setup{coverpageonly}
+% Verwijder de "%" op de volgende lijn als je enkel de eerste pagina's wil
+% afdrukken en de rest bv. via Word aanmaken.
+%\setup{frontpagesonly}
+
+% Kies de fonts voor de gewone tekst, bv. Latin Modern
+\setup{font=lm}
+
+% Hier kun je dan nog andere pakketten laden of eigen definities voorzien
+
+% Tenslotte wordt hyperref gebruikt voor pdf bestanden.
+% Dit mag verwijderd worden voor de af te drukken versie.
+\usepackage[pdfusetitle,colorlinks,plainpages=false]{hyperref}
+\usepackage{marvosym}
+%%%%%%%
+% Om wat tekst te genereren wordt hier het lipsum pakket gebruikt.
+% Bij een echte masterproef heb je dit natuurlijk nooit nodig!
+\IfFileExists{lipsum.sty}%
+ {\usepackage{lipsum}\setlipsumdefault{11-13}}%
+ {\newcommand{\lipsum}[1][11-13]{\par Hier komt wat tekst: lipsum ##1.\par}}
+%%%%%%%
+
+%\includeonly{chap-n}
+\begin{document}
+
+\begin{preface}
+With this Thesis, the five year long student career that I embarked upon in September 2015 comes to an end. Over the course of half this decade, I had the opportunity to be immersed in the world of science by unique figures, both at KU Leuven and Tsinghua University. The most important figures in this journey have been those that guided me through this research project, whom I would like to thank for their support.
+\newline \newline
+First and foremost, I would like to thank Prof. Delarue for the opportunity to perform this research, his clear and creative feedback and the knowledge gathered in his courses. In addition, my sincerest gratitude goes to my mentors in this project, Jorge and Zhenmin. Their meticulous feedback and willingness to push me just that little bit further were the driving force behind the quality of this Thesis. My sincerest gratitude also goes to Isabelle Bonjean for her input on the economic aspects of this Thesis. As a final note, I would like to thank my family, friends and my girlfriend Teresa for supporting me over the course of this year. Thank you very much indeed! 
+\end{preface}
+
+\tableofcontents*
+
+\begin{abstract}
+In an attempt to reduce global emission levels, several technologies are in strong development to reshape the electricity generation landscape. Since electricity markets are also becoming liberalised, distributed energy sources (DER) like residential PV and batteries are a gateway for renewable energy sources (RES) to become widely diffused into the market. To enhance the diffusion of these renewable DER, governments have put different incentive schemes into place to accelerate this DER adoption process. To predict the effectiveness of different policies, an adequate modeling approach is required.
+ \newline \noindent
+Since previous work often made ideal assumptions concerning the decision makers by using the expected utility theory (EUT), this Thesis will make the bridge with behavioral economics by using cumulative prospect theory (CPT) to incorporate behavioral factors. An agent-based model (ABM) will be constructed to simulate the behavior of the households. Within this ABM, an optimization model will determine the costs and revenues of a set of residential DER configurations (PV/battery systems). These results will be interpreted by a behavioral model incorporating the elements of the CPT, combined with the peer effects in the system. According to these results, the households will adopt DER. This DER adoption will cause the aggregate electricity consumption to decrease, making the DSO adapt its tariffs, causing the households to adapt their behavior. This "utility death spiral" will also be accounted for in this Thesis.
+\newline \noindent
+The model will be evaluated for four policies: (i) annual net metering, (ii) annual offtake capacity tariff, (iii) net billing and (iv) battery subsidies. Depending on the objectives of the policy makers, different policies can be preferable. The results show that the net billing policy is more suitable for a rapid adoption of smaller DER installations, whereas net metering will be more suitable if the end objective is a more gradual adoption of larger installations. By adding battery subsidies, the adoption of large battery packs will increase even more. With regards to the network charges, the results show that the volumetric distribution tariff will cause a large utility death spiral effect. By changing the network charge to a capacity-based system, this vicious spiral will be partially mitigated. From the results it also emerged that CPT showed some interesting characteristics compared to EUT.
+\newline \noindent
+The results of this Thesis will help policy makers gain an understanding of the effectiveness of different policies to enhance DER adoption when considering behavioral factors of human beings.
+  
+\end{abstract}
+
+\begin{abstract*}
+ In recente jaren zijn twee tendensen de structuur van het elektriciteitssysteem aan het defini\"{e}ren. Enerzijds zijn de klimaatdoelstellingen van de Europese Unie het technologielandschap van de electricteitsopwekking aan het veranderen: traditionelere, vervuilende technologie\"{e}n zoals steen -en bruinkool moeten wijken voor schonere technologie\"{e}n zoals gascentrales, zonne-energie en windenergie. Anderzijds is het ontwerp van de markt in de Europese Unie aan het veranderen van een gecentraliseerde markt naar een geliberaliseerde markt waar in een competitief kader door meerdere actoren kan worden deelgenomen aan het opwekken en opslaan van elektriciteit. Gedistribueerde energietechnologie\"{e}n (DER) kunnen in beide aspecten een oplossing aanbieden, daar de meeste DER op een hernieuwbare manier elektriciteit produceren en ze vanwege hun beperkte omvang en kost door een brede waaier aan actoren in het energielandschap kunnen ge\"{i}nstalleerd worden. 
+ \newline
+ Met oog op het verminderen van de wereldwijde uistoot van broeikasgassen zijn er meerdere initiatieven in ontwikkeling om een $CO_2$ vrije toekomst te kunnen waarborgen. Een belangrijke pijler in dit globaal project is het verminderen en/of verschonen van residentieel energieverbruik, waarvan elektriciteitsverbruik een groot deel uitmaakt. Door huishoudens fotovoltaïsche cellen en batterijen the laten installeren, kan de ecologische impact van residentieel energievebruik enerzijds worden verminderd, maar anderzijds kan het huishouden hier economische voordelen van genieten. Door zelf elektriciteit te produceren en op te slaan zal het huishouden minder elektriciteit van het net moeten verbruiken, wat zijn elektriciteitsfactuur ten goede komt. 
+   \newline \noindent
+ Daar de maatschappij veel baat heeft bij het verspreiden van zonnepanelen en batterijen op residentieel niveau, is het voor overheden en beleidsmakers van cruciaal belang om te kunnen inschatten welke factoren doorslaggevend zijn in het bevorderen van deze verspreiding. Verschillende mogelijkheden kunnen door de overheid worden aangewend om huishoudens aan te zetten tot adoptie van propere energietechnologieën, zoals subsidies, terugleververgoedingen, salderen en netto facturering. Om het nut van deze verschillende programma's te bestuderen, zal in deze Thesis een model worden opgesteld om dit te evalueren.
+   \newline \noindent
+ Daar waar in vroeger onderzoek perfecte assumpties werden gemaakt omtrent het gedrag van huishoudens in besluitvorming door het gebruik te maken van de verwachtenutstheorie ("Expected utility theory (EUT)"), zal dit proefschrift concepten uit de gedragseconomie incorporeren voor het accurater simuleren van menselijk besluitvorming. Vooruitzichttheorie ("Cumulative prospect theory (CPT)") zal hiervoor aangewend worden. Daar waar eerdere besluitvormingstheorie\"{e}n maar in beperkte mate rekening hielden met de risicoaversie en de referentiesituatie van besluitvormers, kan vooruitzichttheorie deze factoren incorporeren. Aangezien het systeem onder beschouwing het gedrag van huishoudens in een energiesysteem tracht te modelleren, zal een agent-gebaseerd model gebruikt worden. Door deze twee theorie\"{e}n en technieken met elkaar te combineren, wordt een model opgesteld om het gedrag en interacties te beschrijven van huishoudens en een elektriciteitsdistributeur (DSO) ten aanzien van hernieuwbare energiebronnen in een energiesysteem. Eerder werk heeft deze denkoefening reeds vaak gedaan, maar tot op heden is deze nog nooit gedaan vanuit de bril van de vooruitzichttheorie. Daar waar deze theorie reeds toegepast is in financi\"{e}le markten, brandbreedteveilingen en participatie in energiemarkten, met innovatieve resultaten, wordt in deze Thesis de brug gemaakt naar het toepassen van deze theorie in het investeringsproces in DER.
+  \newline \noindent
+ Uitgaand van een optimalisatiemodel dat de kosten en opbrengsten van verschillende PV/batterij configuraties berekent, zullen deze kosten en opbrengsten worden ge\"{i}nterpreteerd door een model dat de vooruitzichtheorie, gekoppeld met omgevingseffecten, zal gebruiken om een humane  interpretatie van de resultaten te geven. In functie van deze resultaten zal er al dan niet in een bepaalde configuratie worden ge\"{i}nvesteerd. Deze investeringen in DER zullen de totale elektriciteitsconsumptie van het net doen verminderen, wat de distributeur zijn inkomsten onder druk zal zetten, waardoor de nettarieven zullen aangepast worden. Deze aanpassing in tarieven zal op zijn beurt weer de optimale kosten en opbrengsten voor de huishoudens veranderen, wat de investeringen verder zal doen veranderen, etc.. Deze dynamiek zal voor verschillende overheidsprogramma's worden bestudeerd: (i) netto volumetrische tarieven, (ii) capaciteitstarieven, (iii) net billing en (iv) batterijsubsidies. De resultaten tonen aan dat net billing het ideale programma is om op korte termijn kleine installaties wijd verspreid te maken. Netto volumetrische tarieven zijn dan weer een gepastere kandidaat indien het doel is een graduelere verspreiding van installaties met een grotere capaciteit. Batterijsubsidies kunnen helpen om de diffusie van deze technologie verder te bevorderen. 
+ \newline \noindent
+De "utility death spiral" zal voor het volumetrisch distributietarief zichzelf manifesteren door een vermindering van de elektriciteitsconsumptie van het net, wat de elektriciteitsdistributeur zal dwingen het nettarief te verhogen, waardoor de motivatie voor de huishouden groter zal zijn voor DER te installeren, wat de de elektriciteitsdisributeur wederom zal dwingen zijn tarieven weer te verhogen etc. . Het effect van deze vicieuze cirkel kan worden verzwakt door een capaciteitstarief te introduceren. De voordelen van CPT in deze context zijn ook duidelijk geworden in deze Thesis.
+\newline \noindent
+De resultaten van deze Thesis zullen beleidsmakers helpen inzichten verschaffen in de effici\"{e}ntie van verschillende energieprogramma's om DER verspreiding te bevorderen door gedragsfactoren in rekening te brengen. 
+\end{abstract*}	
+
+% Een lijst van figuren en tabellen is optioneel
+%\listoffigures
+%\listoftables
+% Bij een beperkt aantal figuren en tabellen gebruik je liever het volgende:
+\listoffiguresandtables
+% De lijst van symbolen is eveneens optioneel.
+% Deze lijst moet wel manueel aangemaakt worden, bv. als volgt:
+\chapter{List of Abbreviations and Symbols}
+\section*{Abbreviations}
+\begin{flushleft}
+  \renewcommand{\arraystretch}{1.1}
+  \begin{tabularx}{\textwidth}{@{}p{12mm}X@{}}
+    DAM   & Day-ahead market \\
+    EUT   & Expected utility theory \\
+    PT  & Prospect theory \\
+    CPT  & Cumulative prospect theory \\
+    PV  & Photovoltaic \\
+    LF  & Load factor \\
+    DSO & Distribution system operator\\
+    DER & Distributed energy resources\\
+    CAS & Complex adaptive system\\
+    ABM & Agent-based modeling\\
+    EV & Electric vehicles\\
+    CAGR & Cumulative annual growth rate\\
+    IEA & Internation Energy Agency\\
+    CCGT & Combined cycle gas turbine\\
+    PWR & Pressurized water reactor\\
+    LCOE & Levelised cost of electricity\\
+    LCOS & Levelised cost of storage\\
+    TSO & Transmission system operator\\
+    ODD & Overview, design concepts and details\\
+    FiT & Feed-in Tariff\\
+    DSM & Demand side management\\
+    NPV & Net present value\\
+    RCT & Rational choice theory\\
+    SPT & Smooth prospect theory\\
+    Capex & Capital expenditures\\
+    Opex & Operational expenditures\\
+    RES & Renewable energy sources\\    
+    GHG & Greenhouse gases\\
+  \end{tabularx}
+\end{flushleft}
+\section*{Symbols}
+\begin{flushleft}
+  \renewcommand{\arraystretch}{1.1}
+  \begin{tabularx}{\textwidth}{@{}p{12mm}X@{}}
+    $V(x)$    & Value function according to cumulative prospect theory (years)\\
+    $UT_{eco}$   & Economic utility (years) \\
+    $NUT_{eco}$   & Normalised economic utility (-)\\
+    $UT_{soc}$ & Social utility (-)\\
+    $UT_{tot}$ & Total utility (-)\\
+    $w_{eco}$ & Weight economic utility (-)\\
+    $w_{soc}$ & Weight social utility (-)\\
+    $w(p)$   & Probability distortion weighting (-)\\
+    $distcost$ & Distribution cost to consumer (\EUR{})\\
+    $dist_{net}$ & Fixed volumetric distribution tariff (\EUR{}/\textit{kWh})\\
+    $dist_{net,var}$ & Variable volumetric distribution tariff (\EUR{}/\textit{kWh})\\
+    $q_{net}$ & Net volumetric distribution tariff (\textit{kWh}) \\
+    $dist_{cap}$ & Fixed capacity offtake distribution tarrif (\EUR{}/\textit{kW})\\
+    $dist_{cap,var}$ & Variable capacity offtake distribution tarrif (\EUR{}/\textit{kW})\\
+    $q_{cap}$ & Maximal grid offtake capacity (\textit{kW})\\
+    $\lambda_{DAM}[t]$ & DAM price electricity (\EUR{}/\textit{kWh})\\
+    $\alpha_{DAM}[t]$ & DAM injection price (\EUR{}/\textit{kWh})\\
+    $d[t]$ & Residential demand without DERs (\textit{kWh})\\
+    $q[t]$ & Residential demand with adopted DERs (\textit{kWh})\\
+    $i[t]$ & Grid offtake (\textit{kWh})\\
+    $e[t]$ & Grid injection (\textit{kWh})\\
+    $pv[t]$ & Power production by the photovoltaic configuration (\textit{kW})\\
+    $ch[t]$ & Charging power of the battery (\textit{kW})\\
+    $dch[t]$ & Discharging power of the battery (\textit{kW})\\
+    $PV_{Max}$ & Maximal power production point of the PV installation (\textit{kW})\\
+    $LF_{PV}[t]$ & LF of the PV installation [-]\\
+    $e_{BAT}[t]$ & Energy level of the battery (\textit{kWh})\\
+    $P_{Max}^{ch}$ & Maximal charging power of the battery (\textit{kW})\\
+    $P_{Max}^{dch}$ & Maximal discharging power of the battery (\textit{kW})\\
+    $E_{Max}^{BAT}$ & Maximal energy level of the battery (\textit{kWh})\\
+    $E_{Min}^{BAT}$ & Minimal energy level of the battery (\textit{kWh})\\
+    $\eta_{ch}$ & Charging efficiency of the battery[-]\\
+    $\eta_{dch}$ & Discharging efficiency of the battery[-]\\
+    $r$ & Weighted average cost of capital (WACC)\\
+    $L_{Tech}$ & Lifetime technology (years)\\
+    $PB$ & Effective payback period DERs investment (years)\\
+    $PB_{ex}$ & Expected payback period DERs investment (years)\\
+    $AS$ & Annual savings of an investment (euro)\\
+    $TS$ & Total savings of an investment (euro)\\
+    $TC$ & Total cost of an investment (euro)\\
+    $AC_{noPV}$ & Annual electricity cost without DERs (\EUR{})\\
+    $AC_{PV}$ & Annual electricity cost with DERs (\EUR{})
+    \\
+  \end{tabularx}
+\end{flushleft}
+
+% Nu begint de eigenlijke tekst
+\mainmatter
+\include{chap-1}
+\include{chap-2}
+\include{chap-3}
+\include{chap-4}
+\include{chap-5}    
+\include{chap-6}    
+
+% Indien er bijlagen zijn:
+\appendixpage*          % indien gewenst
+\appendix
+%\include{app-A}
+\include{app-n}
+\include{App2}
+% ... en zo verder tot
+
+
+\backmatter
+% Na de bijlagen plaatst men nog de bibliografie.
+% Je kan de  standaard "abbrv" bibliografiestijl vervangen door een andere.
+\bibliographystyle{ieeetr}
+\bibliography{references}
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
